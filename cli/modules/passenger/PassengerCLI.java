@@ -1,40 +1,54 @@
-package cli;
+package cli.modules.passenger;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import cli.CLIInterface;
+import cli.validators.Option;
+import cli.validators.OptionValidator;
 import service.PassengerService;
 
 public class PassengerCLI implements CLIInterface {
     private Scanner sc;
     private PassengerService service;
+    private ArrayList<Option> options = new ArrayList<Option>();
+    private OptionValidator validator;
 
     public PassengerCLI(Scanner sc, PassengerService service) {
         this.sc = sc;
         this.service = service;
+
+        this.options.add(new Option(1, "Request a ride"));
+        this.options.add(new Option(2, "Check trip records"));
+        this.options.add(new Option(3, "Go back"));
+        this.validator = new OptionValidator(options.size());
     }
 
     public void runCLI() {
-        this.displayOptions();
-        int choice = this.sc.nextInt();
-        switch(choice) {
-            case 1:
-                handleRideRequest();    break;
-            case 2:
-                handleCheckTripRecords();   break;
-            case 3:
-                return;
-            default:
-                System.out.println("[ERROR] Invalid input.");
+        int choice = getChoice();
+        CLIInterface p = PassengerOperationFactory.createOperation(choice, sc, service);
+        p.runCLI();
+    }
+
+    // TODO: Redundant function
+    private int getChoice(){
+        System.out.println("Passenger, what would you like to do?");
+        for (Option o : options) {
+            System.out.println(o);
+        }
+        sc.nextLine();
+
+        while (true) {
+            System.out.printf("Please enter [1-%d]\n", options.size());
+            String choiceString = this.sc.nextLine();
+            String errorMsg = this.validator.validate(choiceString);
+            if (errorMsg == null) {
+                return Integer.parseInt(choiceString);
+            }
+            System.out.println(errorMsg);
         }
     }
 
-    private void displayOptions() {
-        System.out.println("Passenger, what would you like to do?");
-        System.out.println("1. Request a ride");
-        System.out.println("2. Check trip records");
-        System.out.println("3. Go back");
-        System.out.println("Please enter [1-3]");        
-    }
 
     private void handleRideRequest() {
         int ID, passengersCount, minDrivingYears;

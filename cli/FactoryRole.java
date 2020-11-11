@@ -2,6 +2,9 @@ package cli;
 
 import java.util.Scanner;
 
+import cli.modules.administrator.AdministratorCLI;
+import cli.modules.manager.ManagerCLI;
+import cli.modules.passenger.PassengerCLI;
 import service.AdministratorService;
 import service.DriverService;
 import service.ManagerService;

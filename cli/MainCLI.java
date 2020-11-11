@@ -32,6 +32,6 @@ public class MainCLI implements CLIInterface {
         for (int i = 0; i < roles.length; i ++) {
             System.out.println(i + 1 + ". " + roles[i].getRoleString());
         }
-        System.out.println("Please enter [1-4]");
+        System.out.printf("Please enter [1-%d]\n", roles.length);
     }
 }
