@@ -28,6 +28,6 @@ public class AdministratorLoadData implements CLIInterface {
     }
 
     private void execute() {
-        service.loadData();
+        service.loadData(folderPath);
     }
 }

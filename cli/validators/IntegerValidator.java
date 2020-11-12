@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 public class IntegerValidator extends Validator {
     public IntegerValidator(UserInput data) {
-        this.data = data;
+        this.context = data.context;
+        this.input = data.input;
     }
 
     @Override
     public ArrayList<String> validate() {
         boolean isPositiveInteger = true;
         try {
-            int flag = Integer.parseInt(this.data.input);
+            int flag = Integer.parseInt(this.input);
             if (flag < 0)
                 isPositiveInteger = false;
         } catch (NumberFormatException e) {
@@ -20,7 +21,7 @@ public class IntegerValidator extends Validator {
 
         if (!isPositiveInteger) {
             this.errorMsg.add(
-                String.format("[ERROR] %s must be a positive integer.", this.data.context)
+                String.format("[ERROR] %s must be a positive integer.", this.context)
             );
         }
         return this.errorMsg;

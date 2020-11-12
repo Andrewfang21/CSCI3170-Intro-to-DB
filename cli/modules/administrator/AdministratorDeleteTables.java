@@ -1,7 +1,5 @@
 package cli.modules.administrator;
 
-import java.util.Scanner;
-
 import cli.CLIInterface;
 import service.AdministratorService;
 
@@ -20,5 +18,4 @@ public class AdministratorDeleteTables implements CLIInterface {
     private void execute() {
         this.service.deleteTables();
     }
-
 }

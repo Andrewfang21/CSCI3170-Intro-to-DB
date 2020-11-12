@@ -12,11 +12,7 @@ import cli.validators.StringInput;
 import cli.validators.UserInput;
 import service.PassengerService;
 
-public class PassengerRequestRide implements CLIInterface {
-    private Scanner sc;
-    private PassengerService service;
-
-    private int passengerID;
+public class PassengerRequestRide extends AbstractPassenger implements CLIInterface {
     private int passengersCount;
     private int minDrivingYears;
     private String start;
@@ -39,29 +35,11 @@ public class PassengerRequestRide implements CLIInterface {
         execute();
     }
 
-    private void setPassengerID() {
-        System.out.println("Please enter your ID.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("ID", rawInput);
-            input = new IntegerValidator(input);
-
-            ArrayList<String> errorMsg = input.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            passengerID = Integer.parseInt(rawInput);
-            break;
-        }
-    }
-
     private void setPassengersCount() {
         System.out.println("Please enter the number of passengers.");
         while (true) {
             String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("Number of passegners", rawInput);
+            UserInput input = new IntegerInput("Number of passengers", rawInput);
             input = new RangeValidator(input, 1, 8);
 
             ArrayList<String> errorMsg = input.validate();
@@ -130,6 +108,6 @@ public class PassengerRequestRide implements CLIInterface {
     }
 
     public void execute() {
-        
+        service.requestRide(passengerID, passengersCount, minDrivingYears, start, destination, model);
     }
 }

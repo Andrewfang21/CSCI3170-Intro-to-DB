@@ -1,10 +1,12 @@
-package cli;
+package cli.modules;
 
 import java.util.Scanner;
 
+import cli.CLIInterface;
 import cli.modules.administrator.AdministratorCLI;
 import cli.modules.manager.ManagerCLI;
 import cli.modules.passenger.PassengerCLI;
+import cli.modules.driver.DriverCLI;
 import service.AdministratorService;
 import service.DriverService;
 import service.ManagerService;

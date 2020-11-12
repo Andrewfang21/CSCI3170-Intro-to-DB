@@ -5,20 +5,14 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.validators.IntegerInput;
-import cli.validators.IntegerValidator;
 import cli.validators.StringInput;
 import cli.validators.UserInput;
 import service.PassengerService;
 
-public class PassengerCheckTripRecords implements CLIInterface {
-    private Scanner sc;
-    private PassengerService service;
-
+public class PassengerCheckTripRecords extends AbstractPassenger implements CLIInterface {
     private Calendar startDate;
     private Calendar endDate;
     private String destination;
-    private int passengerID;
 
     public PassengerCheckTripRecords(Scanner sc, PassengerService service) {
         this.sc = sc;
@@ -32,24 +26,6 @@ public class PassengerCheckTripRecords implements CLIInterface {
         setEndDate();
         setDestination();
         execute();
-    }
-
-    public void setPassengerID() {
-        System.out.println("Please enter your ID.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("ID", rawInput);
-            input = new IntegerValidator(input);
-
-            ArrayList<String> errorMsg = input.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            passengerID = Integer.parseInt(rawInput);
-            break;
-        }
     }
 
     public void setStartDate() {
@@ -87,7 +63,6 @@ public class PassengerCheckTripRecords implements CLIInterface {
         }
     }
 
-    private void execute() {
-
+    public void execute() {
     }
 }

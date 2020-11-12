@@ -7,16 +7,17 @@ public class DifferentValidator extends Validator {
     private String otherValue;
 
     public DifferentValidator(UserInput data, String otherContext, String otherValue) {
-        this.data = data;
+        this.context = data.context;
+        this.input = data.input;
         this.otherContext = otherContext;
         this.otherValue = otherValue;
     }
 
     @Override
     public ArrayList<String> validate() {
-        if (!this.data.input.equals(otherValue)) {
+        if (!this.input.equals(otherValue)) {
             this.errorMsg.add(
-              String.format("[ERROR] %s and %s should be different", this.data.context, otherContext)
+              String.format("[ERROR] %s and %s should be different", this.context, otherContext)
             );
 
         }

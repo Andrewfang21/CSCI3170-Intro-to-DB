@@ -5,6 +5,6 @@ public class AdministratorService {
 
     public void createTables() {}
     public void deleteTables() {}
-    public void loadData() {}
+    public void loadData(String path) {}
     public void checkData() {}
 }
