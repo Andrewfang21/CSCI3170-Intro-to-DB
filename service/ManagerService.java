@@ -1,7 +1,13 @@
 package service;
 
+import java.sql.Connection;
+
 public class ManagerService {
-    public ManagerService() {}
+    private Connection db;
+
+    public ManagerService(Connection db) {
+        this.db = db;
+    }
 
     public void findTrips(int minTravelingDistance, int maxTravelingDistance) {}
 }

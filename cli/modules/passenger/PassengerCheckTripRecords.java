@@ -50,7 +50,7 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
         System.out.println("Please enter destination.");
         while (true) {
             String rawInput = sc.nextLine();
-            UserInput input = new StringInput("Destination", rawInput);
+            UserInput<String> input = new StringInput("Destination", rawInput);
 
             ArrayList<String> errorMsg = input.validate();
             if (!errorMsg.isEmpty()) {

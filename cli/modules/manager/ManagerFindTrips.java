@@ -1,14 +1,9 @@
 package cli.modules.manager;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import cli.CLIInterface;
 import cli.OperationInterface;
-import cli.validators.IntegerInput;
-import cli.validators.IntegerValidator;
-import cli.validators.IsGreaterValidator;
-import cli.validators.UserInput;
 import service.ManagerService;
 
 public class ManagerFindTrips implements CLIInterface, OperationInterface {
@@ -31,39 +26,12 @@ public class ManagerFindTrips implements CLIInterface, OperationInterface {
 
     private void setMinTravelingDistance() {
         System.out.println("Please enter the minimum traveling distance.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("Minimum traveling distance", rawInput);
-            input = new IntegerValidator(input);
-            
-            ArrayList<String> errorMsg = input.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            minTravelingDistance = Integer.parseInt(rawInput);
-            break;
-        }
+        minTravelingDistance = sc.nextInt();
     }
 
     private void setMaxTravelingDistance() {
         System.out.println("Please enter the maximum traveling distance.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("Maximum traveling distance", rawInput);
-            input = new IntegerValidator(input);
-            input = new IsGreaterValidator(input, "Minimum traveling distance", minTravelingDistance);
-        
-            ArrayList<String> errorMsg = input.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            maxTravelingDistance = Integer.parseInt(rawInput);
-            break;
-        }
+        maxTravelingDistance = sc.nextInt();
     }
 
     public void execute() {

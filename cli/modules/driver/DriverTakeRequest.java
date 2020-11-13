@@ -1,12 +1,8 @@
 package cli.modules.driver;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.validators.IntegerInput;
-import cli.validators.IntegerValidator;
-import cli.validators.UserInput;
 import service.DriverService;
 
 public class DriverTakeRequest extends AbstractDriver implements CLIInterface {
@@ -26,21 +22,7 @@ public class DriverTakeRequest extends AbstractDriver implements CLIInterface {
 
     private void setRequestID() {
         System.out.println("Please enter the request ID.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("Request ID", rawInput);
-            input = new IntegerValidator(input);
-
-            ArrayList<String> errorMsg = input.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            requestID = Integer.parseInt(rawInput);
-            break;
-        }
-
+        requestID = sc.nextInt();
     }
 
     @Override

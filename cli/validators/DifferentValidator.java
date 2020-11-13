@@ -2,11 +2,11 @@ package cli.validators;
 
 import java.util.ArrayList;
 
-public class DifferentValidator extends Validator {
+public class DifferentValidator<T> extends Validator<T> {
     private String otherContext;
-    private String otherValue;
+    private T otherValue;
 
-    public DifferentValidator(UserInput data, String otherContext, String otherValue) {
+    public DifferentValidator(UserInput<T> data, String otherContext, T otherValue) {
         this.context = data.context;
         this.input = data.input;
         this.otherContext = otherContext;

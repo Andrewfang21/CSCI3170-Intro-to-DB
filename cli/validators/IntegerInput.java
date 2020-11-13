@@ -1,7 +1,7 @@
 package cli.validators;
 
-public class IntegerInput extends UserInput {
-    public IntegerInput(String context, String input) {
+public class IntegerInput extends UserInput<Integer> {
+    public IntegerInput(String context, int input) {
         this.context = context;
         this.input = input;
     }

@@ -1,12 +1,8 @@
 package cli.modules.driver;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.validators.IntegerInput;
-import cli.validators.IntegerValidator;
-import cli.validators.UserInput;
 import service.DriverService;
 
 public class DriverSearchRequests extends AbstractDriver implements CLIInterface {
@@ -32,55 +28,13 @@ public class DriverSearchRequests extends AbstractDriver implements CLIInterface
 
     private void setLocationCoordinate() {
         System.out.println("Please enter the coordinates of your location.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            String[] coordinate = 
-                rawInput
-                    .trim()
-                    .split("\\s+");
-            if (coordinate.length != 2) {
-                System.out.println("[ERROR] Coordinate should have 2 values (X and Y).");
-                continue;
-            }
-
-            UserInput inputX = new IntegerInput("Coordinate X", coordinate[0]);
-            inputX = new IntegerValidator(inputX);
-            ArrayList<String> errorMsg = inputX.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            UserInput inputY = new IntegerInput("Coordinate Y", coordinate[0]);
-            inputY = new IntegerValidator(inputY);
-            errorMsg = inputY.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            locationX = Integer.parseInt(coordinate[0]);
-            locationY = Integer.parseInt(coordinate[1]);
-            break;
-        }
+        locationX = sc.nextInt();
+        locationY = sc.nextInt();
     }
 
     private void setMaxDistance() {
         System.out.println("Please enter the maximum distance from you to the passenger.");
-        while (true) {
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("Maximum distance", rawInput);
-            input = new IntegerValidator(input);
-
-            ArrayList<String> errorMsg = input.validate();
-            if (!errorMsg.isEmpty()) {
-                System.out.println(errorMsg.get(0));
-                continue;
-            }
-
-            maxDistance = Integer.parseInt(rawInput);
-            break;
-        }
+        maxDistance = sc.nextInt();
     }
 
     public void execute() {

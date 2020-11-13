@@ -19,10 +19,10 @@ public abstract class AbstractCLI {
             System.out.println(o);
         }
 
+        System.out.printf("Please enter [1-%d]\n", options.size());
         while (true) {
-            System.out.printf("Please enter [1-%d]\n", options.size());
-            String rawInput = sc.nextLine();
-            UserInput input = new IntegerInput("Input", rawInput);
+            int rawInput = sc.nextInt();
+            UserInput<Integer> input = new IntegerInput("Input", rawInput);
             input = new RangeValidator(input, 1, options.size());
 
             ArrayList<String> errorMsg = input.validate();
@@ -31,7 +31,7 @@ public abstract class AbstractCLI {
                 continue;
             }
 
-            return Integer.parseInt(rawInput);
+            return rawInput;
         }
     }
 }

@@ -1,7 +1,13 @@
 package service;
 
+import java.sql.Connection;
+
 public class AdministratorService {
-    public AdministratorService() {}
+    private Connection db;
+    
+    public AdministratorService(Connection db) {
+        this.db = db;
+    }
 
     public void createTables() {}
     public void deleteTables() {}

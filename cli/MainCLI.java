@@ -1,13 +1,16 @@
 package cli;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import cli.modules.FactoryRole;
 import cli.modules.RoleEnum;
 import cli.validators.Option;
+import service.DatabaseService;
 
 public class MainCLI extends AbstractCLI implements CLIInterface {
-    // TODO: Add DB handler inside the constructor arguments
+
     public MainCLI() {
         this.sc = new Scanner(System.in);
         this.greetingMsg = "Welcome! Who are you?";
@@ -19,8 +22,18 @@ public class MainCLI extends AbstractCLI implements CLIInterface {
     }
 
     public void runCLI() {
-        int choice = getChoice();
-        CLIInterface cli = FactoryRole.getRoleFromChoice(choice, sc);
-        cli.runCLI();
+        Connection db;
+        try {
+            db = DatabaseService.getConnection();
+          
+            int choice = getChoice();
+            CLIInterface cli = FactoryRole.getRoleFromChoice(choice, sc, db);
+            cli.runCLI();
+          
+        } catch (ClassNotFoundException e) {
+
+        } catch (SQLException e) {
+            
+        }
     }
 }

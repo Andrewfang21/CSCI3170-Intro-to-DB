@@ -1,7 +1,13 @@
 package service;
 
+import java.sql.Connection;
+
 public class DriverService {
-    public DriverService() {}
+    private Connection db;
+
+    public DriverService(Connection db) {
+        this.db = db;
+    }
 
     public void searchRequests(
         int driverID, int locationX, int locationY, int maxDistance
