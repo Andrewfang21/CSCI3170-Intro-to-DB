@@ -7,6 +7,8 @@ public class DifferentValidator<T> extends Validator<T> {
     private T otherValue;
 
     public DifferentValidator(UserInput<T> data, String otherContext, T otherValue) {
+        assert(data.getClass() == otherValue.getClass());
+
         this.context = data.context;
         this.input = data.input;
         this.otherContext = otherContext;

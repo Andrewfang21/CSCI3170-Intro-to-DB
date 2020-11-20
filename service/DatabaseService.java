@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class DatabaseService {
     // TODO: Hide it in environment variables?
-    final static String DBUrl = "";
-    final static String DBUser = "";
-    final static String DBPassword = "";
+    final static String DBUrl = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/group39";
+    final static String DBUser = "Group39";
+    final static String DBPassword = "dbg39ad";
 
     private static Connection connection;
 
@@ -16,7 +16,7 @@ public class DatabaseService {
         if (connection != null)
             return connection;
     
-        Class.forName("com.mysql.jbdc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
 
         connection = DriverManager.getConnection(DBUrl, DBUser, DBPassword);
         return connection;

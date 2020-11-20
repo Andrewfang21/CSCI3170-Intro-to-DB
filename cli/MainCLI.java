@@ -31,9 +31,9 @@ public class MainCLI extends AbstractCLI implements CLIInterface {
             cli.runCLI();
           
         } catch (ClassNotFoundException e) {
-
+            System.out.println(e.toString());
         } catch (SQLException e) {
-            
+            System.out.println(e.toString());
         }
     }
 }
