@@ -18,13 +18,20 @@ public class AdministratorLoadData implements CLIInterface {
     @Override
     public void runCLI() {
         setFolderPath();
-        execute();
     }
 
     private void setFolderPath() {
-        folderPath = sc.nextLine();
-        // TODO:
-        // Check if folderPath is valid
+        System.out.println("Please enter the folder path");
+        folderPath = sc.next().trim();
+        try {
+
+            System.out.print("Processing...");
+            execute();
+            System.out.println("Data is loaded!");
+
+        } catch (Exception e) {
+            System.out.println("[ERROR] Cannot load data from file: " + e);
+        }
     }
 
     private void execute() {
