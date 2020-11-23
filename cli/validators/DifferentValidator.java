@@ -17,7 +17,7 @@ public class DifferentValidator<T> extends Validator<T> {
 
     @Override
     public ArrayList<String> validate() {
-        if (!this.input.equals(otherValue)) {
+        if (this.input.equals(otherValue)) {
             this.errorMsg.add(
               String.format("[ERROR] %s and %s should be different", this.context, otherContext)
             );

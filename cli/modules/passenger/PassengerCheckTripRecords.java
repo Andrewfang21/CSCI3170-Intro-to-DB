@@ -29,6 +29,7 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
     }
 
     public void setStartDate() {
+        System.out.println("Please enter the start date.");
         while (true) {
             String rawInput = sc.nextLine();
             // TODO:
@@ -37,6 +38,7 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
     }
 
     public void setEndDate() {
+        System.out.println("Please enter the end date.");
         while (true) {
             String rawInput = sc.nextLine();
             // TODO:

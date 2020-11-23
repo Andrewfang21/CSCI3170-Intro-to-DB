@@ -62,10 +62,29 @@ public class AdministratorService {
                 "   destination VARCHAR(20) NOT NULL,\n" +
                 "   fee INTEGER NOT NULL,\n" +
                 "   PRIMARY KEY(tid),\n" +
-                "   FOREIGN KEY (did) REFERENCES drivers(did) ON DELETE CASCADE," +
-                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE" +
+                "   FOREIGN KEY (did) REFERENCES drivers(did) ON DELETE CASCADE,\n" +
+                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE\n" +
+                //"   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
+                //"   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
                 ")"
             ),
+            db.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS request (\n" +
+                "   rid INTEGER NOT NULL UNIQUE AUTO_INCREMENT,\n" +
+                "   pid INTEGER NOT NULL,\n" +
+                "   start_location VARCHAR(20) NOT NULL,\n" +
+                "   destination VARCHAR(20) NOT NULL,\n" +
+                "   model VARCHAR(30) NOT NULL,\n" + 
+                "   passengers INTEGER NOT NULL, \n" +
+                "   taken TINYINT(1) NOT NULL,\n" +
+                "   driving_years INTEGER NOT NULL,\n" +
+                "   PRIMARY KEY(rid),\n" +
+                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE\n" +
+                //"   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
+                //"   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
+                ")"
+            ),
+            
         };
 
         for (PreparedStatement s : stmts) {
@@ -94,6 +113,7 @@ public class AdministratorService {
 
     public void loadData(String path) {
         for (ModelEnum m : ModelEnum.values()) {
+
             String filePath = String.format("%s/%s.csv", path, m.getName());
 
             try {

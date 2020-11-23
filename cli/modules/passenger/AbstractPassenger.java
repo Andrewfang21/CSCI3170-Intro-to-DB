@@ -13,6 +13,17 @@ public abstract class AbstractPassenger {
     
     public void setPassengerID() {
         System.out.println("Please enter your ID.");
-        passengerID = sc.nextInt();
+        while (true){
+            int rawInput = sc.nextInt();
+            //input = new IdValidator(input);
+            
+            //service.checkId(rawInput);
+            if (!service.checkId(rawInput)){
+                System.out.println("[Error] Your ID is not found in our database");
+                continue;
+            }
+            passengerID = rawInput;
+            break;
+        }
     }
 }

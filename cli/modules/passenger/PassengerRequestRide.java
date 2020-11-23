@@ -6,6 +6,7 @@ import java.util.Scanner;
 import cli.CLIInterface;
 import cli.validators.DifferentValidator;
 import cli.validators.IntegerInput;
+import cli.validators.LocationValidator;
 import cli.validators.RangeValidator;
 import cli.validators.StringInput;
 import cli.validators.UserInput;
@@ -39,8 +40,10 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
 
     private void setPassengersCount() {
         System.out.println("Please enter the number of passengers.");
+        
         while (true) {
             int rawInput = sc.nextInt();
+            sc.nextLine();
             UserInput<Integer> input = new IntegerInput("Number of passengers", rawInput);
             input = new RangeValidator(input, MIN_PASSENGERS, MAX_PASSENGERS);
 
@@ -53,25 +56,45 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
             passengersCount = rawInput;
             break;
         }
+        
     }
 
     private void setStartLocation() {
         System.out.println("Please enter the start location.");
-        String input = sc.nextLine();
+
         // TODO:
         // Check if location is exist in the database
-        start = input;
+        while (true) {
+            String rawInput = sc.nextLine();
+            
+            if(!service.checkLocation(rawInput)){
+                System.out.println("[Error] Your location is not found in our database");
+                continue;
+            }
+
+            start = rawInput;
+            break;
+        }
+        
+        
     }
 
     private void setDestination() {
         // TODO:
         // Check if location is exist in the database
         System.out.println("Please enter destination.");
+        
         while (true) {
             String rawInput = sc.nextLine();
             UserInput<String> input = new StringInput("Destination", rawInput);
+            
+            if(!service.checkLocation(rawInput)){
+                System.out.println("[Error] Your location is not found in our database");
+                continue;
+            }
+            //Make sure that start location and destination are different    
             input = new DifferentValidator<String>(input, "start location", start);
-
+            
             ArrayList<String> errorMsg = input.validate();
             if (!errorMsg.isEmpty()) {
                 System.out.println(errorMsg.get(0));
@@ -81,11 +104,27 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
             destination = rawInput;
             break;
         }
+        
     }
 
     private void setModel() {
         System.out.println("Please enter the model. (Please enter to skip).");
-        model = sc.nextLine();
+        while (true) {
+            String rawInput = sc.nextLine();
+            
+            if(rawInput.isBlank()){
+                model = rawInput;
+                break;
+            }
+
+            if(service.getModel(rawInput).isEmpty()){
+                System.out.println("[Error] Your model is not found in our database");
+                continue;
+            }
+            
+            model = rawInput;
+            break;
+        }
     }
 
     private void setMinDrivingYears() {
