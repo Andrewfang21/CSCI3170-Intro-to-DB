@@ -13,7 +13,6 @@ public class Driver implements ModelInterface {
     @Override
     public void parse(String input) {
         String[] data = input.split(",");
-        assert(data.length == Driver.class.getFields().length);
 
         ID = Integer.parseInt(data[0]);
         name = data[1];
@@ -25,7 +24,7 @@ public class Driver implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO drivers (did, name, vid, driving_years)\n" +
+                "INSERT INTO driver (did, name, vid, driving_years)\n" +
                 "VALUES (?,?,?,?)"
             );
             stmt.setInt(1, ID);

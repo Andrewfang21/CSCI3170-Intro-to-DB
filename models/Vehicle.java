@@ -12,7 +12,6 @@ public class Vehicle implements ModelInterface {
     @Override
     public void parse(String input) {
         String[] data = input.split(",");
-        assert(data.length == Vehicle.class.getFields().length);
 
         ID = data[0];
         model = data[1];
@@ -23,7 +22,7 @@ public class Vehicle implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO vehicles (vid, model, seats)\n" +
+                "INSERT INTO vehicle (vid, model, seats)\n" +
                 "VALUES (?,?,?)"
             );
             stmt.setString(1, ID);

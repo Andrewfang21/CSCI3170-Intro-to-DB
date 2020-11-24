@@ -21,7 +21,6 @@ public class Trip implements ModelInterface {
     @Override
     public void parse(String input) {
         String[] data = input.split(",");
-        assert (data.length == Trip.class.getFields().length);
 
         ID = Integer.parseInt(data[0]);
         driverID = Integer.parseInt(data[1]);
@@ -45,7 +44,7 @@ public class Trip implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO trips (\n" +
+                "INSERT INTO trip (\n" +
                 "   tid, did, pid,\n" +
                 "   start_time, end_time,\n" +
                 "   start_location, destination,\n" +

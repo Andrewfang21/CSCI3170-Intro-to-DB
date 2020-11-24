@@ -20,7 +20,7 @@ public class AdministratorService {
     public void createTables() throws SQLException {
         PreparedStatement[] stmts = {
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS vehicles (\n" +
+                "CREATE TABLE IF NOT EXISTS vehicle (\n" +
                 "   vid VARCHAR(6) NOT NULL UNIQUE,\n" +
                 "   model VARCHAR(30) NOT NULL,\n" +
                 "   seats INTEGER NOT NULL,\n" +
@@ -28,23 +28,23 @@ public class AdministratorService {
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS drivers (\n" +
+                "CREATE TABLE IF NOT EXISTS driver (\n" +
                 "   did INTEGER NOT NULL UNIQUE,\n" +
                 "   name VARCHAR(30) NOT NULL,\n" +
                 "   vid VARCHAR(6) NOT NULL,\n" +
                 "   driving_years INTEGER NOT NULL,\n" +
                 "   PRIMARY KEY (did),\n" +
-                "   FOREIGN KEY (vid) REFERENCES vehicles(vid) ON DELETE CASCADE" +
+                "   FOREIGN KEY (vid) REFERENCES vehicle(vid) ON DELETE CASCADE\n" +
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS passengers (\n" +
+                "CREATE TABLE IF NOT EXISTS passenger (\n" +
                 "   pid INTEGER NOT NULL UNIQUE,\n" +
                 "   name VARCHAR(30) NOT NULL\n" +
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS taxi_stops (\n" +
+                "CREATE TABLE IF NOT EXISTS taxi_stop (\n" +
                 "   name VARCHAR(20) NOT NULL UNIQUE,\n" +
                 "   loc_x INTEGER NOT NULL,\n" +
                 "   loc_y INTEGER NOT NULL,\n" +
@@ -52,7 +52,7 @@ public class AdministratorService {
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS trips (\n" +
+                "CREATE TABLE IF NOT EXISTS trip (\n" +
                 "   tid INTEGER NOT NULL UNIQUE,\n" +
                 "   did INTEGER NOT NULL,\n" +
                 "   pid INTEGER NOT NULL,\n" +
@@ -62,10 +62,8 @@ public class AdministratorService {
                 "   destination VARCHAR(20) NOT NULL,\n" +
                 "   fee INTEGER NOT NULL,\n" +
                 "   PRIMARY KEY(tid),\n" +
-                "   FOREIGN KEY (did) REFERENCES drivers(did) ON DELETE CASCADE,\n" +
-                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE\n" +
-                //"   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
-                //"   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
+                "   FOREIGN KEY (did) REFERENCES driver(did) ON DELETE CASCADE,\n" +
+                "   FOREIGN KEY (pid) REFERENCES passenger(pid) ON DELETE CASCADE\n" +
                 ")"
             ),
             db.prepareStatement(
@@ -80,8 +78,8 @@ public class AdministratorService {
                 "   driving_years INTEGER NOT NULL,\n" +
                 "   PRIMARY KEY(rid),\n" +
                 "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE\n" +
-                //"   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
-                //"   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
+                "   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
+                "   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
                 ")"
             ),
             
@@ -96,25 +94,23 @@ public class AdministratorService {
         // TODO:
         // ON DELETE CASCADE in foreign key fails, check why
         for (ModelEnum m : ModelEnum.values()) {
-            PreparedStatement stmt = db.prepareStatement(
-                "SET foreign_key_checks = 0"
-            );
-            stmt.execute();
-            stmt = db.prepareStatement(
-                "DROP TABLE IF EXISTS " + m.getName() + " CASCADE"
-            );
-            stmt.execute();
-            stmt = db.prepareStatement(
-                "SET foreign_key_checks = 1"
-            );
-            stmt.execute();
+            PreparedStatement[] stmts = {
+                db.prepareStatement("SET foreign_key_checks = 0"),
+                db.prepareStatement(
+                    "DROP TABLE IF EXISTS " + m.getName() + " CASCADE"
+                ),
+                db.prepareStatement("SET foreign_key_checks = 1"),
+            };
+
+            for (PreparedStatement stmt : stmts) {
+                stmt.execute();
+            }
         }
     }
 
     public void loadData(String path) {
         for (ModelEnum m : ModelEnum.values()) {
-
-            String filePath = String.format("%s/%s.csv", path, m.getName());
+            String filePath = path + "/" + m.getName() + "s.csv";
 
             try {
 
@@ -134,7 +130,7 @@ public class AdministratorService {
                 reader.close();
 
             } catch (Exception e) {
-                System.out.println(e);
+                ;
             }
         }
     }
@@ -154,7 +150,6 @@ public class AdministratorService {
                                   splitted[i].substring(1);
 
                 String field = String.join("_", splitted);
-                field = field.substring(0, field.length() - 1);
                 int result = rs.getInt(1);
 
                 System.out.println(field + ": " + result);

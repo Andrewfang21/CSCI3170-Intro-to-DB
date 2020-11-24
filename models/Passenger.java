@@ -11,7 +11,6 @@ public class Passenger implements ModelInterface {
     @Override
     public void parse(String input) {
         String[] data = input.split(",");
-        assert(data.length == Passenger.class.getFields().length);
 
         ID = Integer.parseInt(data[0]);
         name = data[1];
@@ -21,7 +20,7 @@ public class Passenger implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO passengers (pid, name)\n" +
+                "INSERT INTO passenger (pid, name)\n" +
                 "VALUES (?,?)"
             );
             stmt.setInt(1, ID);
