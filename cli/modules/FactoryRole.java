@@ -7,6 +7,7 @@ import cli.CLIInterface;
 import cli.modules.administrator.AdministratorCLI;
 import cli.modules.manager.ManagerCLI;
 import cli.modules.passenger.PassengerCLI;
+import models.Trip;
 import cli.modules.driver.DriverCLI;
 import service.AdministratorService;
 import service.DriverService;
@@ -25,7 +26,7 @@ public class FactoryRole {
             case PASSENGER:
                 return new PassengerCLI(sc, new PassengerService(db));
             case DRIVER:
-                return new DriverCLI(sc, new DriverService(db));
+                return new DriverCLI(sc, new DriverService(db, new Trip()));
             case MANAGER:
                 return new ManagerCLI(sc, new ManagerService(db));
             default:

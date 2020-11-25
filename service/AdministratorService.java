@@ -52,22 +52,24 @@ public class AdministratorService {
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS trip (\n" +
-                "   tid INTEGER NOT NULL UNIQUE,\n" +
+                "CREATE TABLE IF NOT EXISTS trips (\n" +
+                "   tid INTEGER AUTO_INCREMENT NOT NULL UNIQUE,\n" +
                 "   did INTEGER NOT NULL,\n" +
                 "   pid INTEGER NOT NULL,\n" +
-                "   start_time DATE NOT NULL,\n" +
-                "   end_time DATE NOT NULL,\n" +
+                "   start_time DATETIME NOT NULL,\n" +
+                "   end_time DATETIME DEFAULT NULL,\n" +
                 "   start_location VARCHAR(20) NOT NULL,\n" +
                 "   destination VARCHAR(20) NOT NULL,\n" +
-                "   fee INTEGER NOT NULL,\n" +
+                "   fee INTEGER DEFAULT NULL,\n" +
                 "   PRIMARY KEY(tid),\n" +
-                "   FOREIGN KEY (did) REFERENCES driver(did) ON DELETE CASCADE,\n" +
-                "   FOREIGN KEY (pid) REFERENCES passenger(pid) ON DELETE CASCADE\n" +
+                "   FOREIGN KEY (did) REFERENCES drivers(did) ON DELETE CASCADE,\n" +
+                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE,\n" +
+                "   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
+                "   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS request (\n" +
+                "CREATE TABLE IF NOT EXISTS requests (\n" +
                 "   rid INTEGER NOT NULL UNIQUE AUTO_INCREMENT,\n" +
                 "   pid INTEGER NOT NULL,\n" +
                 "   start_location VARCHAR(20) NOT NULL,\n" +
@@ -77,7 +79,7 @@ public class AdministratorService {
                 "   taken TINYINT(1) NOT NULL,\n" +
                 "   driving_years INTEGER NOT NULL,\n" +
                 "   PRIMARY KEY(rid),\n" +
-                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE\n" +
+                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE,\n" +
                 "   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
                 "   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
                 ")"
@@ -130,7 +132,10 @@ public class AdministratorService {
                 reader.close();
 
             } catch (Exception e) {
-                ;
+                if (e.toString().contains("request"))
+                    continue;
+
+                System.out.println(e);
             }
         }
     }

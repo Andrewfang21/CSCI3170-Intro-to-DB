@@ -6,10 +6,6 @@ import cli.CLIInterface;
 import service.DriverService;
 
 public class DriverSearchRequests extends AbstractDriver implements CLIInterface {
-    private Scanner sc;
-    private DriverService service;
-
-    private int driverID;
     private int locationX, locationY;
     private int maxDistance;
 

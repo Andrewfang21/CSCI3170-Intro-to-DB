@@ -16,13 +16,14 @@ public class PassengerService {
         int ID, int passengersCount, int minDrivingYears,
         String start, String destination, String model
     ) {
-        try{
-            //System.out.println(start + " " + model);
+        try {
             PreparedStatement checkStmt;
             checkStmt = db.prepareStatement(
-                "SELECT COUNT(*) FROM drivers JOIN vehicles ON drivers.vid=vehicles.vid " +
-                "WHERE vehicles.model LIKE ? AND " +
-                "vehicles.seats>=? AND drivers.driving_years>=?"  
+                "SELECT COUNT(*)\n" +
+                "FROM drivers\n" +
+                "JOIN vehicles ON drivers.vid = vehicles.vid\n" +
+                "WHERE vehicles.model LIKE ? AND\n" +
+                "vehicles.seats >= ? AND drivers.driving_years >= ?"  
             );
             checkStmt.setString(1, "%" + model + "%");
             checkStmt.setInt(2, passengersCount);
@@ -32,10 +33,10 @@ public class PassengerService {
 
             int result = rs.getInt(1);
             
-            if(result > 0){
+            if (result > 0) {
                 PreparedStatement stmt = db.prepareStatement(
-                    "INSERT INTO request (pid, start_location, destination, model, passengers, taken, driving_years)" +
-                    "VALUES  (?, ?, ?, ?, ?, ?, ?)" 
+                    "INSERT INTO requests (pid, start_location, destination, model, passengers, taken, driving_years)\n" +
+                    "VALUES  (?,?,?,?,?,?,?)" 
                 );
                 stmt.setInt(1, ID);
                 stmt.setString(2, start);
@@ -47,10 +48,10 @@ public class PassengerService {
                 stmt.execute();
                 
                 System.out.println("Your request is placed. " + result + " drivers are able to take the request");
-            }else{
+            } else {
                 System.out.println("There are no drivers that fulfill your requests");
             }
-        }catch (SQLException e){
+        } catch (SQLException e){
             System.out.println("[ERROR] Error inserting table: " + e);
         }
     }
@@ -59,27 +60,28 @@ public class PassengerService {
         String startDate, String endDate, String destination
     ) {}
 
-    public boolean checkId(int ID){
+    public boolean IDExists(int ID){
         try{
             PreparedStatement stmt = db.prepareStatement(
-                "SELECT * FROM passengers WHERE pid=" + ID
+                "SELECT * FROM passengers WHERE pid = ?"
             );
+            stmt.setInt(1, ID);
 
             ResultSet rs = stmt.executeQuery();
-            if (rs.next() == false){
+            if (rs.next() == false) {
                 return false;
             }
             return true;
-        }catch(SQLException e){
+        } catch(SQLException e) {
             System.out.println("[Error] Error in finding ID: " + e);
             return false;
         }
     }
 
-    public boolean checkLocation (String location){
-        try{
+    public boolean locationExists (String location){
+        try {
             PreparedStatement stmt = db.prepareStatement(
-                "SELECT * FROM taxi_stops WHERE name=?" 
+                "SELECT * FROM taxi_stops WHERE name = ?" 
             );
             stmt.setString(1, location);
             ResultSet rs = stmt.executeQuery();
@@ -87,28 +89,9 @@ public class PassengerService {
                 return false;
             }
             return true;
-        }catch(SQLException e){
+        } catch(SQLException e) {
             System.out.println("[Error] Error in finding location: "+ e);
             return false;
-        }
-    }
-
-    public String getModel (String model){
-        try{
-            PreparedStatement stmt = db.prepareStatement(
-                "SELECT * FROM vehicles WHERE model LIKE ? " 
-            );
-            stmt.setString(1, "%" + model + "%");
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next() == false){
-                return "";
-            }
-
-            String carModel = rs.getString("model");
-            return carModel;
-        }catch(SQLException e){
-            System.out.println("[Error] Error in finding the car model");
-            return "";
         }
     }
 }

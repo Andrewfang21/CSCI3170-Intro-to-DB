@@ -67,7 +67,7 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
         while (true) {
             String rawInput = sc.nextLine();
             
-            if(!service.checkLocation(rawInput)){
+            if(!service.locationExists(rawInput)){
                 System.out.println("[Error] Your location is not found in our database");
                 continue;
             }
@@ -88,7 +88,7 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
             String rawInput = sc.nextLine();
             UserInput<String> input = new StringInput("Destination", rawInput);
             
-            if(!service.checkLocation(rawInput)){
+            if(!service.locationExists(rawInput)) {
                 System.out.println("[Error] Your location is not found in our database");
                 continue;
             }
@@ -111,17 +111,6 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
         System.out.println("Please enter the model. (Please enter to skip).");
         while (true) {
             String rawInput = sc.nextLine();
-            
-            if(rawInput.isBlank()){
-                model = rawInput;
-                break;
-            }
-
-            if(service.getModel(rawInput).isEmpty()){
-                System.out.println("[Error] Your model is not found in our database");
-                continue;
-            }
-            
             model = rawInput;
             break;
         }

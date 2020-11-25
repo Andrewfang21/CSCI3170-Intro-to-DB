@@ -18,7 +18,7 @@ public abstract class AbstractPassenger {
             //input = new IdValidator(input);
             
             //service.checkId(rawInput);
-            if (!service.checkId(rawInput)){
+            if (!service.IDExists(rawInput)) {
                 System.out.println("[Error] Your ID is not found in our database");
                 continue;
             }
