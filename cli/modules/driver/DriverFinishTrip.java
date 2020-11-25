@@ -20,6 +20,6 @@ public class DriverFinishTrip extends AbstractDriver implements CLIInterface {
 
     @Override
     public void execute() {
-        service.finishTrip(driverID);
+        service.finishTrip(driverID, sc);
     }
 }
