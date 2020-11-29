@@ -24,7 +24,7 @@ public class Driver implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO driver (did, name, vid, driving_years)\n" +
+                "INSERT INTO drivers (did, name, vid, driving_years)\n" +
                 "VALUES (?,?,?,?)"
             );
             stmt.setInt(1, ID);

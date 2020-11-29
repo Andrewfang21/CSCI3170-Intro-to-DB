@@ -45,7 +45,7 @@ public class Trip implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO trip (\n" +
+                "INSERT INTO trips (\n" +
                 "   tid, did, pid,\n" +
                 "   start_time, end_time,\n" +
                 "   start_location, destination,\n" +

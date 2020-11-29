@@ -22,7 +22,7 @@ public class Vehicle implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO vehicle (vid, model, seats)\n" +
+                "INSERT INTO vehicles (vid, model, seats)\n" +
                 "VALUES (?,?,?)"
             );
             stmt.setString(1, ID);

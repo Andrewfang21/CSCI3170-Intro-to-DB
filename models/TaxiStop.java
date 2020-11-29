@@ -22,7 +22,7 @@ public class TaxiStop implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO taxi_stop (name, loc_x, loc_y)\n" +
+                "INSERT INTO taxi_stops (name, loc_x, loc_y)\n" +
                 "VALUES (?,?,?)"
             );
             stmt.setString(1, name);

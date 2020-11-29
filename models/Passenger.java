@@ -20,7 +20,7 @@ public class Passenger implements ModelInterface {
     public void insert(Connection conn) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO passenger (pid, name)\n" +
+                "INSERT INTO passengers (pid, name)\n" +
                 "VALUES (?,?)"
             );
             stmt.setInt(1, ID);

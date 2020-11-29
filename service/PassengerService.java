@@ -2,8 +2,11 @@ package service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.Calendar;
 
 public class PassengerService {
     private Connection db;
@@ -57,8 +60,49 @@ public class PassengerService {
     }
 
     public void checkTripRecords(int ID,
-        String startDate, String endDate, String destination
-    ) {}
+        Calendar startDate, Calendar endDate, String destination
+    ) {
+        try{
+            PreparedStatement checkStmt;
+            checkStmt = db.prepareStatement(
+                "SELECT \n" + 
+                "   tid,\n" + 
+                "   D1.name,\n" +
+                "   D1.vid,\n" + 
+                "   D1.model,\n " +
+                "   start_time,\n " + 
+                "   end_time,\n " + 
+                "   start_location,\n " + 
+                "   destination\n" +
+                "FROM trips JOIN \n" +
+                "   (SELECT drivers.did, drivers.vid, model, name FROM drivers JOIN vehicles ON drivers.vid=vehicles.vid) D1 ON D1.did=trips.did \n" +
+                "WHERE pid=? AND\n" +
+                "   start_time >= ? AND \n"+
+                "   end_time <= ? AND \n"+
+                "   destination = ?"  
+            );
+
+            checkStmt.setInt(1, ID);
+            checkStmt.setTimestamp(2, new Timestamp(startDate.getTimeInMillis()));
+            checkStmt.setTimestamp(3, new Timestamp(endDate.getTimeInMillis()));
+            checkStmt.setString(4, destination);
+            ResultSet rs = checkStmt.executeQuery();
+
+            System.out.println("Trip id, Driver Name, Vehicle ID, Vehicle Model, Start, End, Start Location, Destination");
+            while (rs.next()) {
+                System.out.printf(
+                    "%s, %s, %s, %s, %s, %s, %s, %s\n",
+                    rs.getString("tid"), rs.getString("D1.name"),
+                    rs.getString("D1.vid"), rs.getString("D1.model"),
+                    rs.getString("start_time"), rs.getString("end_time"),
+                    rs.getString("start_location"), rs.getString("destination")
+                );
+            }
+
+        }catch(SQLException e){
+            System.out.println("[Error] Error in finding trips : " + e);
+        }
+    }
 
     public boolean IDExists(int ID){
         try{

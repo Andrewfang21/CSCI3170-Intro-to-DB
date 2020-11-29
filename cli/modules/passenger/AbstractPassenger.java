@@ -15,6 +15,7 @@ public abstract class AbstractPassenger {
         System.out.println("Please enter your ID.");
         while (true){
             int rawInput = sc.nextInt();
+            sc.nextLine();
             //input = new IdValidator(input);
             
             //service.checkId(rawInput);

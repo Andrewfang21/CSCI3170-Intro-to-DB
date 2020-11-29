@@ -1,10 +1,12 @@
 package cli.modules.passenger;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
 import cli.CLIInterface;
+import cli.validators.DifferentValidator;
 import cli.validators.StringInput;
 import cli.validators.UserInput;
 import service.PassengerService;
@@ -34,6 +36,17 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
             String rawInput = sc.nextLine();
             // TODO:
             // Check date format
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+            try{
+                cal.setTime(sdf.parse(rawInput));
+            }catch(Exception e){
+                System.out.println("[Error] Unable to parse date");
+                continue;
+            }
+
+            startDate = cal;
+            break;
         }
     }
 
@@ -43,6 +56,17 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
             String rawInput = sc.nextLine();
             // TODO:
             // Check date format
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+            try{
+                cal.setTime(sdf.parse(rawInput));
+            }catch(Exception e){
+                System.out.println("[Error] Unable to parse date");
+                continue;
+            }
+
+            endDate = cal;
+            break;
         }
     }
 
@@ -53,6 +77,11 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
         while (true) {
             String rawInput = sc.nextLine();
             UserInput<String> input = new StringInput("Destination", rawInput);
+            
+            if(!service.locationExists(rawInput)) {
+                System.out.println("[Error] Your location is not found in our database");
+                continue;
+            }
 
             ArrayList<String> errorMsg = input.validate();
             if (!errorMsg.isEmpty()) {
@@ -66,5 +95,6 @@ public class PassengerCheckTripRecords extends AbstractPassenger implements CLII
     }
 
     public void execute() {
+        service.checkTripRecords(passengerID, startDate, endDate, destination);
     }
 }

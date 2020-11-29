@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class DatabaseService {
     // TODO: Hide it in environment variables?
-    // final static String DBUrl = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/group39";
-    // final static String DBUser = "Group39";
-    // final static String DBPassword = "dbg39ad";
-    final static String DBUrl = "jdbc:mysql://localhost:3306/group39";
-    final static String DBUser = "root";
-    final static String DBPassword = "secret";
+    final static String DBUrl = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/group39";
+    final static String DBUser = "Group39";
+    final static String DBPassword = "dbg39ad";
+    //final static String DBUrl = "jdbc:mysql://localhost:3306/group39";
+    //final static String DBUser = "root";
+    //final static String DBPassword = "secret";
 
     private static Connection connection;
 

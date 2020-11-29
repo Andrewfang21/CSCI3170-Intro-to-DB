@@ -20,7 +20,7 @@ public class AdministratorService {
     public void createTables() throws SQLException {
         PreparedStatement[] stmts = {
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS vehicle (\n" +
+                "CREATE TABLE IF NOT EXISTS vehicles (\n" +
                 "   vid VARCHAR(6) NOT NULL UNIQUE,\n" +
                 "   model VARCHAR(30) NOT NULL,\n" +
                 "   seats INTEGER NOT NULL,\n" +
@@ -28,23 +28,23 @@ public class AdministratorService {
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS driver (\n" +
+                "CREATE TABLE IF NOT EXISTS drivers (\n" +
                 "   did INTEGER NOT NULL UNIQUE,\n" +
                 "   name VARCHAR(30) NOT NULL,\n" +
                 "   vid VARCHAR(6) NOT NULL,\n" +
                 "   driving_years INTEGER NOT NULL,\n" +
                 "   PRIMARY KEY (did),\n" +
-                "   FOREIGN KEY (vid) REFERENCES vehicle(vid) ON DELETE CASCADE\n" +
+                "   FOREIGN KEY (vid) REFERENCES vehicles(vid) ON DELETE CASCADE\n" +
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS passenger (\n" +
+                "CREATE TABLE IF NOT EXISTS passengers (\n" +
                 "   pid INTEGER NOT NULL UNIQUE,\n" +
                 "   name VARCHAR(30) NOT NULL\n" +
                 ")"
             ),
             db.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS taxi_stop (\n" +
+                "CREATE TABLE IF NOT EXISTS taxi_stops (\n" +
                 "   name VARCHAR(20) NOT NULL UNIQUE,\n" +
                 "   loc_x INTEGER NOT NULL,\n" +
                 "   loc_y INTEGER NOT NULL,\n" +
@@ -112,8 +112,7 @@ public class AdministratorService {
 
     public void loadData(String path) {
         for (ModelEnum m : ModelEnum.values()) {
-            String filePath = path + "/" + m.getName() + "s.csv";
-
+            String filePath = path + "/" + m.getName() + ".csv";
             try {
 
                 BufferedReader reader = new BufferedReader(new FileReader(filePath));
