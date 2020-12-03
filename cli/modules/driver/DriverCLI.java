@@ -16,15 +16,20 @@ public class DriverCLI extends AbstractCLI implements CLIInterface {
         this.greetingMsg = "Driver, what would you like to do?";
 
         DriverEnum[] op = DriverEnum.values();
-        for (int i = 0; i < op.length; i ++) {
+        for (int i = 0; i < op.length; i++) {
             this.options.add(new Option(i + 1, op[i].getOperation()));
         }
     }
 
     @Override
     public void runCLI() {
-        int choice = getChoice();
-        CLIInterface d = DriverOperationFactory.createOperation(choice, sc, service);
-        d.runCLI();
+        while (true) {
+            int choice = getChoice();
+            CLIInterface d = DriverOperationFactory.createOperation(choice, sc, service);
+            if (d == null)
+                return;
+
+            d.runCLI();
+        }
     }
 }

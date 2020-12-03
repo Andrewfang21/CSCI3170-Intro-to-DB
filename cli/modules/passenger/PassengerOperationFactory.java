@@ -3,7 +3,6 @@ package cli.modules.passenger;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.MainCLI;
 import service.PassengerService;
 
 public class PassengerOperationFactory {
@@ -18,7 +17,7 @@ public class PassengerOperationFactory {
             case CHECK_TRIP_RECORDS:
                 return new PassengerCheckTripRecords(sc, service);
             case GO_BACK:
-                return new MainCLI();
+                return null;
             default:
                 return null;
         }

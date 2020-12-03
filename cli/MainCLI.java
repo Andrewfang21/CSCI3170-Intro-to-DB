@@ -26,9 +26,9 @@ public class MainCLI extends AbstractCLI implements CLIInterface {
         try {
             db = DatabaseService.getConnection();
           
-            int choice = getChoice();
-            CLIInterface cli = FactoryRole.getRoleFromChoice(choice, sc, db);
-            while(true){
+            while(true) {
+                int choice = getChoice();
+                CLIInterface cli = FactoryRole.getRoleFromChoice(choice, sc, db);
                 cli.runCLI();
             }
         } catch (ClassNotFoundException e) {

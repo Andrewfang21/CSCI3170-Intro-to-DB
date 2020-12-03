@@ -16,14 +16,19 @@ public class PassengerCLI extends AbstractCLI implements CLIInterface {
         this.greetingMsg = "Passenger, what would you like to do?";
 
         PassengerEnum[] op = PassengerEnum.values();
-        for (int i = 0; i < op.length; i ++) {
+        for (int i = 0; i < op.length; i++) {
             this.options.add(new Option(i + 1, op[i].getOperation()));
         }
     }
 
     public void runCLI() {
-        int choice = getChoice();
-        CLIInterface p = PassengerOperationFactory.createOperation(choice, sc, service);
-        p.runCLI();
+        while (true) {
+            int choice = getChoice();
+            CLIInterface p = PassengerOperationFactory.createOperation(choice, sc, service);
+            if (p == null)
+                return;
+
+            p.runCLI();
+        }
     }
 }

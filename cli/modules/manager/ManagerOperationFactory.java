@@ -3,7 +3,6 @@ package cli.modules.manager;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.MainCLI;
 import service.ManagerService;
 
 public class ManagerOperationFactory {
@@ -16,7 +15,7 @@ public class ManagerOperationFactory {
             case FIND_TRIPS:
                 return new ManagerFindTrips(sc, service);
             case GO_BACK:
-                return new MainCLI();
+                return null;
             default:
                 return null;
         }

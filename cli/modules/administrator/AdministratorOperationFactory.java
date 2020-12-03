@@ -3,7 +3,6 @@ package cli.modules.administrator;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.MainCLI;
 import service.AdministratorService;
 
 public class AdministratorOperationFactory {
@@ -22,7 +21,7 @@ public class AdministratorOperationFactory {
             case CHECK_DATA:
                 return new AdministratorCheckData(service);
             case GO_BACK:
-                return new MainCLI();
+                return null;
             default:
                 return null;
         }

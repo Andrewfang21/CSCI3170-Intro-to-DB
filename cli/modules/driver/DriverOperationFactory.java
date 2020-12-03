@@ -3,7 +3,6 @@ package cli.modules.driver;
 import java.util.Scanner;
 
 import cli.CLIInterface;
-import cli.MainCLI;
 import service.DriverService;
 
 public class DriverOperationFactory {
@@ -20,7 +19,7 @@ public class DriverOperationFactory {
             case FINISH_A_TRIP:
                 return new DriverFinishTrip(sc, service);
             case GO_BACK:
-                return new MainCLI();
+                return null;
             default:
                 return null;
         }

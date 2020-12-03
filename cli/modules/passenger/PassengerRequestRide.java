@@ -62,37 +62,29 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
     private void setStartLocation() {
         System.out.println("Please enter the start location.");
 
-        // TODO:
-        // Check if location is exist in the database
         while (true) {
             String rawInput = sc.nextLine();
-            
-            if(!service.locationExists(rawInput)){
-                System.out.println("[Error] Your location is not found in our database");
+            UserInput<String> input = new StringInput("Start location", rawInput);
+            input = new LocationValidator(input, service);
+
+            ArrayList<String> errorMsg = input.validate();
+            if (!errorMsg.isEmpty()) {
+                System.out.println(errorMsg.get(0));
                 continue;
             }
 
             start = rawInput;
             break;
         }
-        
-        
     }
 
     private void setDestination() {
-        // TODO:
-        // Check if location is exist in the database
         System.out.println("Please enter destination.");
         
         while (true) {
             String rawInput = sc.nextLine();
             UserInput<String> input = new StringInput("Destination", rawInput);
-            
-            if(!service.locationExists(rawInput)) {
-                System.out.println("[Error] Your location is not found in our database");
-                continue;
-            }
-            //Make sure that start location and destination are different    
+            input = new LocationValidator(input, service);
             input = new DifferentValidator<String>(input, "start location", start);
             
             ArrayList<String> errorMsg = input.validate();
@@ -104,7 +96,6 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
             destination = rawInput;
             break;
         }
-        
     }
 
     private void setModel() {
