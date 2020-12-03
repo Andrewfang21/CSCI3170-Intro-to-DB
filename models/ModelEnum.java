@@ -4,9 +4,9 @@ public enum ModelEnum {
     VEHICLES("vehicles", Vehicle.class),
     PASSENGERS("passengers", Passenger.class),
     DRIVERS("drivers", Driver.class),
-    TAXI_STOP("taxi_stops", TaxiStop.class),
     TRIP("trips", Trip.class),
-    REQUEST("requests", null);
+    REQUEST("requests", null),
+    TAXI_STOP("taxi_stops", TaxiStop.class);
 
     private String name;
     private Class<?> className;

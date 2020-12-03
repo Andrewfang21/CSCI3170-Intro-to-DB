@@ -63,9 +63,7 @@ public class AdministratorService {
                 "   fee INTEGER DEFAULT NULL,\n" +
                 "   PRIMARY KEY(tid),\n" +
                 "   FOREIGN KEY (did) REFERENCES drivers(did) ON DELETE CASCADE,\n" +
-                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE,\n" +
-                "   FOREIGN KEY (start_location) REFERENCES taxi_stops(name) ON DELETE CASCADE,\n" +
-                "   FOREIGN KEY (destination) REFERENCES taxi_stops(name) ON DELETE CASCADE\n" +
+                "   FOREIGN KEY (pid) REFERENCES passengers(pid) ON DELETE CASCADE\n" +
                 ")"
             ),
             db.prepareStatement(
@@ -154,6 +152,7 @@ public class AdministratorService {
                                   splitted[i].substring(1);
 
                 String field = String.join("_", splitted);
+                field = field.substring(0, field.length() - 1);
                 int result = rs.getInt(1);
 
                 System.out.println(field + ": " + result);
