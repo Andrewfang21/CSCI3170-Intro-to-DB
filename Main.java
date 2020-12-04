@@ -1,8 +1,12 @@
-import cli.*;
+import cli.MainCLI;
 
 public class Main {
     public static void main(String[] args) {
-        MainCLI mainCLI = new MainCLI();
-        mainCLI.runCLI();
+        try{
+            MainCLI mainCLI = new MainCLI();
+            mainCLI.runCLI();
+        } catch (Exception e) {
+    		;
+    	}
     }
 }

@@ -110,7 +110,7 @@ public class PassengerRequestRide extends AbstractPassenger implements CLIInterf
     private void setMinDrivingYears() {
         System.out.println("Please enter the minimum driving years of the driver (Please enter to skip).");
         String rawInput = sc.nextLine();
-        if (!rawInput.isBlank()) {
+        if (!rawInput.isEmpty()) {
             minDrivingYears = Integer.parseInt(rawInput);
             return;
         }
